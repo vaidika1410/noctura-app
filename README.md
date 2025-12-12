@@ -104,4 +104,10 @@ Noctura is built to help you stay organized during the day and maintain calm, mi
 
 ---
 
+### ✨ Author
+
+**Noctura** was created and designed by **Vaidika Kaul**.  
+All rights reserved. You are free to clone and learn from the project,
+but credit is required if you use or modify significant portions of the code.
+
 # **End of README.md**

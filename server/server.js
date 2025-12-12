@@ -22,7 +22,25 @@ connectDB()
     process.exit(1);
   });
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",          
+  "https://noctura-frontend.onrender.com" 
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (e.g., mobile apps, curl)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("CORS blocked: " + origin), false);
+    }
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 
 const authLogger = (req, res, next) => {
