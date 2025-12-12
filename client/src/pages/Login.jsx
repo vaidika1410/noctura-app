@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "../api/axiosInstance";
 import { saveToken, saveUser } from "../utils/auth";
@@ -6,13 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 
-
   localStorage.removeItem("reminders");
   localStorage.removeItem("night-planner");
   localStorage.removeItem("calendar-data");
   localStorage.removeItem("habit-tracker");
   localStorage.removeItem("kanban-cache");
-
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -35,7 +32,6 @@ export default function Login() {
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
-
 
   const particles = useMemo(() => {
     const isMobile = window.innerWidth < 640; 
@@ -62,7 +58,9 @@ export default function Login() {
 
     try {
       setBusy(true);
-      const res = await axios.post("/auth/login", { email, password });
+
+      // ✅ FIXED API ENDPOINT
+      const res = await axios.post("/api/auth/login", { email, password });
 
       const token = res?.data?.token;
       const user = res?.data?.user;

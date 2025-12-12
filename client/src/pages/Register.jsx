@@ -12,7 +12,6 @@ export default function Register() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
- 
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const obs = new IntersectionObserver(
@@ -44,13 +43,6 @@ export default function Register() {
   }, []);
 
   const handleSubmit = async (e) => {
-
-    console.log({
-  username: name,
-  email,
-  password,
-});
-
     e.preventDefault();
     setError(null);
 
@@ -61,7 +53,8 @@ export default function Register() {
     try {
       setBusy(true);
 
-      const res = await axios.post("/auth/register", {
+      // ✅ FIXED ENDPOINT
+      const res = await axios.post("/api/auth/register", {
         username: name.trim(),
         email: email.trim(),
         password,
@@ -70,12 +63,10 @@ export default function Register() {
       const token = res?.data?.token;
       const user = res?.data?.user;
 
-     
       if (token) saveToken(token);
       if (user) saveUser(user);
 
       navigate("/dashboard");
-
     } catch (err) {
       const msg =
         err?.response?.data?.message ||
@@ -89,8 +80,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-[#0b0b0f] flex items-center justify-center relative overflow-hidden px-4">
-
-      {/* --- Styles for glow + particles --- */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
@@ -167,10 +156,7 @@ export default function Register() {
           Join <span className="text-indigo-400 font-medium">Noctura</span>
         </p>
 
-        {/* === FORM === */}
         <form onSubmit={handleSubmit} className="space-y-6">
-
-          {/* Name */}
           <div>
             <label className="text-sm text-gray-300">Name</label>
             <input
@@ -182,7 +168,6 @@ export default function Register() {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label className="text-sm text-gray-300">Email</label>
             <input
@@ -194,7 +179,6 @@ export default function Register() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="text-sm text-gray-300">Password</label>
             <input
@@ -206,14 +190,12 @@ export default function Register() {
             />
           </div>
 
-          {/* Error message */}
           {error && (
             <div className="text-sm text-red-400 bg-red-950/40 border border-red-900/40 p-2 rounded-lg text-center">
               {error}
             </div>
           )}
 
-          {/* BUTTON */}
           <button
             type="submit"
             disabled={busy}
