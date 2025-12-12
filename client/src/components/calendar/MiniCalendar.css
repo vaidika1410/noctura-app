@@ -1,0 +1,132 @@
+.mini-cal-root {
+  width: 100%;
+  background: linear-gradient(180deg, #1b1b1d, #151517);
+  border: 1px solid #202022;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+}
+
+/* Header */
+.mc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.mc-month-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.mc-nav-btn {
+  background: #202022;
+  border: 1px solid #2b2b2d;
+  color: #a1a1a5;
+  padding: 4px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.mc-nav-btn:hover {
+  background: #2d2d30;
+  color: white;
+}
+
+/* Weekdays */
+.mc-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+
+.mc-weekday {
+  text-align: center;
+  color: #6d6d72;
+  font-size: 0.75rem;
+}
+
+/* Grid */
+.mc-grid {
+  display: grid;
+  gap: 6px;
+}
+
+/* Tiles */
+.mc-tile {
+  background: #202022;
+  border-radius: 10px;
+  border: 1px solid #2a2a2c;
+  color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.mc-tile:hover {
+  transform: scale(1.05);
+  background: #2d2d30;
+}
+
+.mc-tile.today {
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+/* Empty tile */
+.mc-tile.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+/* Date number */
+.mc-date {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Dots */
+.mc-dots {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.mc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6b7280;
+  box-shadow: 0 0 5px rgba(0,0,0,0.35);
+}
+
+
+/* --- MINI CALENDAR RESPONSIVE FIX --- */
+.mini-cal-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.mc-tile {
+  width: 100%;
+  aspect-ratio: 1 / 1;      
+  max-height: 72px;         
+  max-width: 72px;
+}
+
+/* Mobile: smaller squares */
+@media (max-width: 500px) {
+  .mc-tile {
+    max-width: none;
+    max-height: none;
+    aspect-ratio: 1 / 1;
+  }
+}

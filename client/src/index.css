@@ -1,0 +1,285 @@
+@import 'tailwindcss';
+
+body {
+  background-color: #151517;
+  color: white;
+}
+
+.fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Remove default WebKit time picker styles */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(70%);
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  filter: invert(100%);
+}
+
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatY {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes neonShift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(25deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* Neon particles */
+.noct-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.04));
+  will-change: transform, opacity;
+  filter: blur(0.6px);
+}
+
+.animate-float {
+  animation: floatY ease-in-out infinite;
+}
+
+/* === MODERN GLASSMORPHIC CARD === */
+
+.neon-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+
+}
+
+/* glass top shine gradient */
+.neon-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.02));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* soft card hover */
+.neon-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.068);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* keep inner content above shine layer */
+.neon-card-inner {
+  position: relative;
+  z-index: 5;
+}
+
+
+.neon-card:hover::before {
+  filter: blur(26px);
+  opacity: 1;
+  animation: neonShift 3s linear infinite;
+}
+
+/* top inner highlight */
+.neon-accent {
+  position: absolute;
+  top: 10px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+/* === BUTTON HOVER CYBER GLOW === */
+.cyber-btn:hover {
+  box-shadow: 0 0 20px rgba(111, 93, 247, 0.55), 0 0 10px rgba(70, 140, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.cyber-outline:hover {
+  box-shadow: 0 0 5px rgba(120, 120, 255, 0.3);
+  border-color: rgba(140, 120, 255, 0.6);
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+.settings svg {
+  transition: all ease-in-out 0.3s;
+}
+
+.settings:hover svg {
+  transform: rotate(45deg);
+}
+
+.drop-active>div {
+  border-color: rgba(99, 102, 241, 0.55) !important;
+  box-shadow: 0 0 22px rgba(99, 102, 241, 0.25);
+  background-color: rgba(40, 40, 45, 0.5);
+  transform: scale(1.01);
+  transition: 0.2s ease;
+}
+
+.drop-active {
+  animation: columnPulse 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes columnPulse {
+  from {
+    box-shadow: 0 0 0px rgba(99, 102, 241, 0.1);
+  }
+
+  to {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
+  }
+}
+
+
+.kanban-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.kanban-card.dragging {
+  opacity: 0.85 !important;
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 12px rgba(99, 102, 241, 0.45);
+  border-color: rgba(99, 102, 241, 0.6) !important;
+  cursor: grabbing;
+  position: relative;
+  z-index: 50;
+}
+
+
+.kanban-column {
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.kanban-column.drop-target {
+  border-color: rgba(99, 102, 241, 0.6) !important;
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.25);
+  background-color: rgba(40, 40, 45, 0.35);
+}
+
+.drag-origin {
+  opacity: 0;
+}
+
+.drag-origin-hidden>* {
+  opacity: 0 !important;
+}
+
+
+.night-fade {
+  animation: fadeIn 0.4s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.night-preview-card {
+  animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.left-page::-webkit-scrollbar {
+  background: #43434350;
+  width: 0;
+}

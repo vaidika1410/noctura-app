@@ -1,0 +1,525 @@
+/* Layout root */
+.cp-page-root {
+  display: grid;
+  grid-template-columns: 220px 1fr 420px; 
+  gap: 20px;
+  min-height: 100vh;
+  background: #151517;
+  color: #fff;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+/* Left column (reminders) */
+.cp-left-col {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cp-left-card {
+  background: linear-gradient(180deg,#1B1B1D 0%, #151517 100%);
+  border: 1px solid #202022;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.cp-left-card h3 { margin: 0 0 6px 0; }
+.cp-left-card .muted { color: #A1A1A5; font-size: 0.95rem; }
+
+/* Center calendar column */
+.cp-center-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* Header area */
+.cp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cp-title { font-size: 30px; margin: 0; }
+.cp-sub { color: #A1A1A5; margin-top: 4px; font-size: 0.9rem; }
+
+/* Controls */
+.cp-controls { display:flex; gap:8px; align-items:center; }
+.btn {
+  background: #202022; color: #A1A1A5; border: 1px solid #2A2A2C;
+  padding: 8px 10px; border-radius: 8px; cursor:pointer; font-size:0.9rem;
+}
+.btn.small { padding:6px 8px; font-size:0.85rem; }
+.btn.primary { background:#2563EB; color:white; border:none; }
+
+/* Calendar shell */
+.cp-calendar-shell {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  border: 1px solid #2A2A2C;
+  border-radius: 10px;
+  padding: 1vh;
+}
+.cp-month-title {
+  text-align:center;
+  font-weight:600;
+  margin-bottom:8px;
+  color: #EDEDED;
+}
+
+/* Weekdays row */
+.cp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  color: #A1A1A5;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.cp-weekday { text-align:center; padding: 6px 0; }
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+/* Tile */
+.cp-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 120px; 
+  background: linear-gradient(180deg,#202022 0%, #1B1B1D 100%);
+  border-radius: 12px;
+  border: 1px solid #232325;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  overflow: hidden;
+  display: flex;
+}
+.cp-tile.other { opacity: 0.75; }
+.cp-tile:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.55); }
+
+/* Priority Line  */
+.cp-left-mark {
+  position: absolute;
+  top: 0;
+  left: 0;           
+  height: 100%;
+  width: 4px;         
+  border-radius: 12px 0 0 12px; 
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Colors */
+.cp-mark-high { background: #EF4444; }   
+.cp-mark-medium { background: #FBBF24; }  
+.cp-mark-low { background: #10B981; }    
+.cp-mark-default { background: #6B7280; }
+
+/* tile content area */
+.cp-tile-content {
+  flex: 1 1 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+/* day number */
+.cp-daynum { font-weight:600; font-size:1.05rem; margin-bottom:6px; }
+
+/* bottom dot row (visual hint) */
+.cp-dot-row { display:flex; gap:6px; align-items:center; justify-self:flex-end; }
+.cp-dot { width:8px; height:8px; background:#9ca3af; border-radius:50%; box-shadow: 0 2px 6px rgba(0,0,0,0.45); }
+.cp-plus { color:#A1A1A5; font-size:0.85rem; margin-left:4px; }
+
+/* highlight today & selected */
+.cp-tile.now { box-shadow: 0 8px 24px rgba(37,99,235,0.12); border-color: #2563EB; transform: translateY(-2px); }
+.cp-tile.selected { border-color: #374151; box-shadow: 0 10px 26px rgba(0,0,0,0.45); }
+
+/* Loading indicator */
+.cp-loading { color: #A1A1A5; padding: 8px 0; text-align:center; }
+
+/* Right panel (task sidebar) */
+.cp-right-col {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  transform-origin: right center;
+}
+.cp-right-col.closed { opacity:0.0; transform: translateX(18px) scale(0.98); pointer-events:none; }
+.cp-right-col.open { opacity:1; transform: translateX(0); pointer-events:auto; }
+
+.cp-right-header {
+  display:flex; justify-content:space-between; align-items:center;
+  background: linear-gradient(180deg,#1B1B1D 0%, #151517 100%);
+  border:1px solid #202022; padding:12px; border-radius:10px;
+}
+.cp-sidebar-title { font-weight:600; }
+.cp-sidebar-date { color:#A1A1A5; font-size:0.9rem; }
+
+.cp-right-body {
+  background: linear-gradient(180deg,#151517 0%, #121213 100%);
+  border:1px solid #202022; 
+  padding:12px; 
+  border-radius:10px; 
+  min-height:200px; 
+  overflow:auto;
+}
+.cp-task-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+/* Task Card */
+.cp-task-card {
+  background: #1f1f26;
+  border: 1px solid #2b2b34;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.cp-task-card:hover {
+  background: #26262f;
+  transform: translateY(-1px);
+  border-color: #3a3a45;
+}
+
+/* Title + Status Row */
+.cp-task-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.cp-task-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fafafa;
+}
+
+/* Status Tag */
+.cp-task-status {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.cp-status-pending {
+  background: rgba(255, 174, 0, 0.15);
+  color: #ffb744;
+}
+
+.cp-status-in-progress {
+  background: rgba(0, 140, 255, 0.15);
+  color: #51aaff;
+}
+
+.cp-status-completed {
+  background: rgba(52, 199, 89, 0.15);
+  color: #4cd964;
+}
+
+/* Description */
+.cp-task-desc {
+  font-size: 0.82rem;
+  color: #b9b9c9;
+  margin-bottom: 8px;
+}
+
+/* Action Buttons  */
+.task-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn.tiny {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  background: #2d2d37;
+  border-radius: 6px;
+  border: 1px solid #373740;
+  color: #dcdce6;
+  transition: background 0.2s ease;
+}
+
+.btn.tiny:hover {
+  background: #3a3a45;
+}
+
+.btn.tiny.danger {
+  background: #422222;
+  border-color: #532b2b;
+  color: #f59b9b;
+}
+
+.btn.tiny.danger:hover {
+  background: #582929;
+}
+
+.cp-task-badge { background:#202022; color:#A1A1A5; padding:4px 8px; border-radius:6px; font-size:0.8rem; }
+
+.cp-task-desc { color:#A1A1A5; margin-top:6px; font-size:0.92rem; }
+
+/* footer */
+.cp-right-footer { padding:6px 0; display:flex; justify-content:flex-end; }
+.cp-right-footer .btn.primary { width:100%; }
+
+/* Modal inputs */
+.cp-modal-content input,
+.cp-modal-content textarea,
+.cp-modal-content .cp-select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #323238;
+  background: #141418;
+  color: #f1f1f5;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Placeholder color */
+.cp-modal-content input::placeholder,
+.cp-modal-content textarea::placeholder {
+  color: #9a9aa1; 
+}
+
+/* Textarea specific */
+.cp-modal-content textarea {
+  min-height: 88px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+/* Select styling */
+.cp-select-label {
+  display: block;
+  font-size: 0.78rem;
+  color: #bfbfc6;
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+
+.cp-select {
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  background-image: linear-gradient(45deg, transparent 50%, #9a9aa1 50%),
+                    linear-gradient(135deg, #9a9aa1 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+/* focus state */
+.cp-modal-content input:focus,
+.cp-modal-content textarea:focus,
+.cp-modal-content .cp-select:focus {
+  outline: none;
+  border-color: #6b6bf5;
+  box-shadow: 0 0 0 3px rgba(107,107,245,0.06);
+}
+
+/* ensure buttons still look good on compact modal */
+.cp-modal-actions .btn {
+  padding: 0.5rem 0.8rem;
+}
+
+
+/* floating go to dashboard */
+.cp-floating-dashboard {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  background: rgba(37,99,235,0.14);
+  border: 1px solid #2563EB;
+  color: #DDEEFF;
+  padding: 10px 12px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+/* small helpers */
+.muted { color:#A1A1A5; }
+
+/* Responsive: collapse to single column on small screens */
+@media (max-width: 980px) {
+  .cp-page-root {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .cp-left-col { order: 3; }
+  .cp-center-col { order: 1; }
+  .cp-right-col { order: 2; width:100%; }
+  .cp-right-col.closed { transform:none; opacity:1; pointer-events:auto; }
+  .cp-grid { gap: 8px; }
+  .cp-tile { height: 100px; }
+  .cp-month-title { text-align:left; }
+  .cp-floating-dashboard { right: 18px; bottom: 18px; }
+}
+
+/* small tweak for very narrow phones */
+@media (max-width: 420px) {
+  .cp-tile { height: 88px; border-radius:10px; }
+  .cp-daynum { font-size: 0.98rem; }
+  .cp-left-mark { display:none; }
+}
+
+/* Reminder list container */
+.cp-reminder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+/* Each reminder item */
+.cp-reminder-item {
+  padding: 0.6rem 0.75rem;
+  background: #1d1d21;
+  border: 1px solid #2a2a2f;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  color: #f1f1f5;
+  font-size: 0.9rem;
+}
+
+/* Reminder time (small badge) */
+.cp-rem-time {
+  margin-left: 8px;
+  font-size: 0.75rem;
+  background: #2f2f33;
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: #c5c5ca;
+}
+
+.cp-left-card .btn.small {
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+/* Modal overlay */
+.cp-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; 
+}
+
+/* Modal box */
+.cp-modal-content {
+  width: 350px;
+  background: #1e1e24;
+  border: 1px solid #2b2b30;
+  border-radius: 14px;
+  padding: 1.25rem;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Modal title */
+.cp-modal-content h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #f8f8fa;
+}
+
+/* Modal inputs */
+.cp-modal-content input,
+.cp-modal-content textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #323238;
+  background: #141418;
+  color: #f1f1f5;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  resize: none;
+  font-size: 0.9rem;
+}
+
+.cp-modal-content input:focus,
+.cp-modal-content textarea:focus {
+  outline: none;
+  border-color: #6b6bf5; 
+}
+
+/* Modal buttons */
+.cp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.cp-modal-actions .btn {
+  padding: 0.5rem 0.8rem;
+  background: #6b6bf5;
+}
+
+.cp-reminder-item:hover {
+  background: #24242b;
+  border-color: #3a3a40;
+  transition: 0.2s ease;
+}
+
+.rem-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.btn.tiny {
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  background: #2b2b30;
+  border-radius: 6px;
+}
+
+.btn.tiny:hover {
+  background: #34343a;
+}
+
+.btn.tiny.danger {
+  background: #5a1e1e;
+}
+
+.btn.tiny.danger:hover {
+  background: #762525;
+}
+
+
+.cp-reminder-dot {
+  width: 2vh;
+  height: 2vh;
+  background: #6b6bf5; 
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.85;
+}
+.cp-reminder-dot:hover {
+  opacity: 1;
+}
+
