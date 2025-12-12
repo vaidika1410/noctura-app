@@ -4,19 +4,17 @@
  * GitHub: https://github.com/vaidika1410
  */
 
-
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require("path");
 const connectDB = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 connectDB()
-  .then(() => {
-    console.log("✔ MongoDB connected");
-  })
+  .then(() => console.log("✔ MongoDB connected"))
   .catch((err) => {
     console.error("❌ DB Connection Failed:", err);
     process.exit(1);
@@ -24,22 +22,21 @@ connectDB()
 
 const allowedOrigins = [
   "http://localhost:5173",          
-  "https://noctura-frontend.onrender.com" 
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (e.g., mobile apps, curl)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
+if (process.env.NODE_ENV !== "production") {
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
       return callback(new Error("CORS blocked: " + origin), false);
-    }
-  },
-  credentials: true,
-}));
+    },
+    credentials: true,
+  }));
+} else {
+  app.use(cors({ origin: true, credentials: true }));
+}
 
 app.use(express.json());
 
@@ -61,19 +58,13 @@ const bedtimeRoutes = require('./routes/bedtimeRoutes');
 const habitRoutes = require('./routes/habitRoutes');
 const kanbanRoutes = require('./routes/kanbanRoutes');
 const nightEntryRoutes = require("./routes/nightEntryRoutes");
-
 const authMiddleware = require('./middleware/authMiddleware');
 
-
-// Public Routes
 if (process.env.NODE_ENV !== "production") {
   app.use('/api/auth', authLogger, authRoutes);
 } else {
   app.use('/api/auth', authRoutes);
 }
-
-// Protected Routes 
-app.use(express.json());
 
 app.use('/api/todo', authMiddleware, taskRoutes);
 app.use('/api/habits', authMiddleware, habitRoutes);
@@ -83,13 +74,21 @@ app.use("/api/reminders", authMiddleware, require("./routes/reminderRoutes"));
 app.use("/api/night-entry", authMiddleware, nightEntryRoutes);
 
 
-app.get('/health', (req, res) => {
-  res.json({ status: "ok" });
-});
+app.get('/health', (req, res) => res.json({ status: "ok" }));
 
-app.get('/', (req, res) => {
-  res.send('Noctura server running');
-});
+if (process.env.NODE_ENV === "production") {
+
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+
+  // SPA fallback — ALL non-API routes → index.html
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('Noctura server running (dev mode)');
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
