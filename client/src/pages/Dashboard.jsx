@@ -21,14 +21,14 @@ export default function Dashboard() {
   const location = useLocation();
 
   useEffect(() => {
-   
+
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     const params = new URLSearchParams(location.search);
     const sectionFromUrl = params.get("section");
 
     if (sectionFromUrl) {
-     
+
       const validSections = ["todo", "kanban", "habits", "nightPlanner", "calendar"];
 
       if (validSections.includes(sectionFromUrl)) {
@@ -53,7 +53,16 @@ export default function Dashboard() {
         className="hidden md:flex flex-col w-48 p-4 fixed h-[100%] z-30"
         style={{ backgroundColor: '#1B1B1D', borderRight: '1px solid #202022' }}
       >
-        <h1 className="text-2xl font-semibold mb-6">Noctura</h1>
+        {/* <h1 className="text-2xl font-semibold mb-6">Noctura</h1> */}
+        {/* <h1
+              onClick={() => navigate("/")}
+              className="text-lg sm:text-xl font-semibold cursor-pointer bg-linear-to-br from-indigo-300 to-purple-300 bg-clip-text text-transparent"
+            >
+              Noctura
+            </h1> */}
+            <a className=' h-18 w-15 mb-5' href="/">
+            <img className='h-full w-full object-cover' src="Noctura-logo.png" alt="Noctura" />
+            </a>
 
         <nav className="flex flex-col space-y-2">
           {[

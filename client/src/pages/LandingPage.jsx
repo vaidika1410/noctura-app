@@ -255,12 +255,15 @@ export default function LandingPage() {
 
         <nav className="fixed top-0 left-0 w-full z-30 backdrop-blur-md bg-[#0b0b10]/28 border-b border-gray-500/30">
           <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6">
-            <h1
+            {/* <h1
               onClick={() => navigate("/")}
               className="text-lg sm:text-xl font-semibold cursor-pointer bg-linear-to-br from-indigo-300 to-purple-300 bg-clip-text text-transparent"
             >
               Noctura
-            </h1>
+            </h1> */}
+            <a className=" h-15 w-30 overflow-hidden" href="/">
+            <img className="h-full w-full object-cover scale-[1.3]" src="Noctura-logo-full.png" alt="Noctura" />
+            </a>
 
             <div className="flex items-center gap-3">
               <button

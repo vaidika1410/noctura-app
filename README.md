@@ -6,6 +6,8 @@ It combines structured productivity for the day with optional mindful routines f
 
 Built with scalability and real-world usage in mind, Noctura supports task management, habit tracking, Kanban workflows, reminders, and an optional night planner — all in one place.
 
+🔗 **Live Demo:** https://noctura-app.onrender.com
+
 ---
 
 ## 🚀 Features

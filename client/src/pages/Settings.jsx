@@ -138,18 +138,15 @@ export default function Settings() {
       `}</style>
 
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex flex-col w-64 p-6 gap-6 glass h-screen sticky top-0">
+      <aside className="relative hidden md:flex flex-col w-64 p-6 gap-6 glass h-screen  top-0">
         <div>
-          <h1
-            onClick={() => navigate("/dashboard")}
-            className="text-2xl font-semibold cursor-pointer bg-linear-to-br from-indigo-300 to-purple-300 bg-clip-text text-transparent"
-          >
-            Noctura
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">Settings</p>
+          <a className="absolute top-8 left-5 h-20 w-30 " href="/">
+          <img className=" h-full w-full object-cover" src="Noctura-logo-full.png" alt="" />
+          </a>
+          <p className="absolute top-35 text-xs text-gray-400 mt-1">Settings</p>
         </div>
 
-        <nav className="flex-1 mt-4">
+        <nav className="absolute top-40 flex-1 mt-4">
           <ul className="space-y-2">
             {menuItems.map((m) => (
               <li key={m.key}>

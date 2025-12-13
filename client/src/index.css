@@ -283,3 +283,8 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
   background: #43434350;
   width: 0;
 }
+
+
+::-webkit-scrollbar {
+  display: none;
+} 
