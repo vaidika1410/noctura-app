@@ -121,6 +121,8 @@ In production, the React build (`client/dist`) is served directly by the Express
 | Frontend | http://localhost:5173 |
 | Backend  | http://localhost:5000 |
 
+---
+
 ### 🚀 Deployment Notes
 
 - Frontend is built automatically during backend installation
@@ -132,6 +134,8 @@ In production, the React build (`client/dist`) is served directly by the Express
 - Axios switches automatically between dev & prod using environment variables
 
 - Express v4 is used for stable wildcard routing
+
+---
 
 ### 🧩 Roadmap
 
@@ -145,6 +149,8 @@ In production, the React build (`client/dist`) is served directly by the Express
 
 - Enhanced calendar integrations
 
+---
+
 ### 👩‍💻 Author
 
 Noctura was designed and developed by **Vaidika Kaul**.
@@ -152,9 +158,32 @@ Noctura was designed and developed by **Vaidika Kaul**.
 You are free to clone and learn from this project.
 If you reuse or modify significant portions of the code, credit is appreciated.
 
+---
+
+## 🤝 Contributing
+
+Contributions, suggestions, and improvements are welcome!
+
+If you’d like to contribute to **Noctura**, please read the contribution guidelines before getting started:
+
+👉 **[Contributing Guidelines](CONTRIBUTING.md)**
+
+Please ensure proper attribution is maintained when forking or building upon this project.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for details.
+
+---
+
 ### ⭐ Final Note
 
 Noctura is not just a task manager —
 it’s a flexible system designed to adapt to how you want to work and unwind.
+
+---
 
 ### End of README.md
