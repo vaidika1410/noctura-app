@@ -81,7 +81,7 @@ export default function CalendarPage() {
     const end = fmtISODate(new Date(y, m + 1, 0));
 
     try {
-      const res = await axios.get(`/reminders/range?start=${start}&end=${end}`);
+      const res = await axios.get(`/api/reminders/range?start=${start}&end=${end}`);
       const map = {};
 
       (res.data || []).forEach((rem) => {
@@ -111,7 +111,7 @@ export default function CalendarPage() {
   async function fetchAllTasks() {
     setLoading(true);
     try {
-      const res = await axios.get("/todo");
+      const res = await axios.get("/api/todo");
       const items = (res.data && (res.data.data || res.data)) || [];
 
       const map = {};
@@ -183,7 +183,7 @@ export default function CalendarPage() {
 
     const iso = fmtISODate(selectedDate);
 
-    axios.get(`/reminders/${iso}`).then((res) => {
+    axios.get(`/api/reminders/${iso}`).then((res) => {
       setReminders(res.data || []);
     });
   }, [selectedDate]);
@@ -196,11 +196,11 @@ export default function CalendarPage() {
     const payload = { ...newReminder, date: iso };
 
     try {
-      await axios.post("/reminders", payload);
+      await axios.post("/api/reminders", payload);
 
       await refreshRemindersForMonth();
 
-      const r = await axios.get(`/reminders/${iso}`);
+      const r = await axios.get(`/api/reminders/${iso}`);
       setReminders(r.data || []);
 
       setNewReminder({ title: "", description: "", time: "" });
@@ -215,11 +215,11 @@ export default function CalendarPage() {
 
     const iso = fmtISODate(selectedDate);
 
-    await axios.delete(`/reminders/${id}`);
+    await axios.delete(`/api/reminders/${id}`);
 
     await refreshRemindersForMonth();
 
-    const res = await axios.get(`/reminders/${iso}`);
+    const res = await axios.get(`/api/reminders/${iso}`);
     setReminders(res.data || []);
   }
 
@@ -262,7 +262,7 @@ export default function CalendarPage() {
     if (!selectedDate) return;
     const iso = fmtISODate(selectedDate);
 
-    axios.get(`/reminders/${iso}`).then((res) => {
+    axios.get(`/api/reminders/${iso}`).then((res) => {
       setReminders(res.data || []);
     });
   }, [selectedDate]);
@@ -271,7 +271,7 @@ export default function CalendarPage() {
   async function handleDeleteTask(id) {
     if (!confirm("Delete this task?")) return;
 
-    await axios.delete(`/todo/${id}`);
+    await axios.delete(`/api/todo/${id}`);
 
     await fetchAllTasks();
   }
@@ -288,7 +288,7 @@ export default function CalendarPage() {
         dueDate: editingTask.dueDate,
       };
 
-      const res = await axios.put(`/todo/${editingTask._id}`, payload);
+      const res = await axios.put(`/api/todo/${editingTask._id}`, payload);
       console.log("Task save response:", res.data);
 
       await fetchAllTasks();
@@ -586,13 +586,13 @@ export default function CalendarPage() {
                   const payload = { ...newReminder, date: iso };
 
                   if (editingReminderId) {
-                    await axios.put(`/reminders/${editingReminderId}`, payload);
+                    await axios.put(`/api/reminders/${editingReminderId}`, payload);
                   } else {
-                    await axios.post("/reminders", payload);
+                    await axios.post("/api/reminders", payload);
                   }
                   await refreshRemindersForMonth();
 
-                  const res = await axios.get(`/reminders/${iso}`);
+                  const res = await axios.get(`/api/reminders/${iso}`);
                   setReminders(res.data || []);
                   setReminderModalOpen(false);
                   setEditingReminderId(null);

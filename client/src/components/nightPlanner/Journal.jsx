@@ -21,7 +21,7 @@ export default function Journal() {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("/night-entry/journal-history", {
+            const res = await axios.get("/api/night-entry/journal-history", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setNotes(res.data.data || []);
@@ -57,7 +57,7 @@ export default function Journal() {
             const token = localStorage.getItem("token");
 
             await axios.put(
-                "/night-entry",
+                "/api/night-entry",
                 { date: today, freeformJournal: text },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -78,7 +78,7 @@ export default function Journal() {
 
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`/night-entry/journal/${id}`, {
+            await axios.delete(`/api/night-entry/journal/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

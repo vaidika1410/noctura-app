@@ -22,7 +22,7 @@ export default function TodoList({
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/todo");
+      const res = await axios.get("/api/todo");
       const fetched = Array.isArray(res.data.data) ? res.data.data : [];
       setTasks(fetched);
     } catch (err) {
@@ -86,7 +86,7 @@ export default function TodoList({
 
   const handleStatusChange = async (taskId, newStatus) => {
     try {
-      await axios.put(`/todo/${taskId}`, { status: newStatus });
+      await axios.put(`/api/todo/${taskId}`, { status: newStatus });
       fetchTasks();
     } catch (err) {
       console.error(err);
@@ -98,7 +98,7 @@ export default function TodoList({
     if (!window.confirm("Delete this task?")) return;
 
     try {
-      await axios.delete(`/todo/${taskId}`);
+      await axios.delete(`/api/todo/${taskId}`);
       fetchTasks();
     } catch (err) {
       console.error(err);

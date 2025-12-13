@@ -29,13 +29,13 @@ const AddNightTaskForm = ({ onTaskAdded, editTask, onCancelEdit }) => {
 
       if (editTask) {
         await axios.put(
-          `/night-tasks/${editTask._id}`,
+          `/api/night-tasks/${editTask._id}`,
           { title, description, time },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
-          '/night-tasks',
+          '/api/night-tasks',
           { title, description, time },
           { headers: { Authorization: `Bearer ${token}` } }
         );

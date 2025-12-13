@@ -52,7 +52,7 @@ export default function NightPlanner() {
     setTasksError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("/night-tasks", {
+      const res = await axios.get("/api/night-tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const tasksArray = Array.isArray(res.data.data) ? res.data.data : [];
@@ -75,7 +75,7 @@ export default function NightPlanner() {
     if (!window.confirm("Are you sure you want to delete this night task?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/night-tasks/${taskId}`, {
+      await axios.delete(`/api/night-tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTasks();
@@ -93,7 +93,7 @@ export default function NightPlanner() {
     setLoadingHabits(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("/habits", {
+      const res = await axios.get("/api/habits", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const all = Array.isArray(res.data.data) ? res.data.data : res.data || [];
@@ -122,7 +122,7 @@ export default function NightPlanner() {
 
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`/night-entry?date=${date}`, {
+        const res = await axios.get(`/api/night-entry?date=${date}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -265,7 +265,7 @@ export default function NightPlanner() {
         })),
       };
 
-      await axios.put("/night-entry", payload, {
+      await axios.put("/api/night-entry", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -294,7 +294,7 @@ export default function NightPlanner() {
     setLoadingJournal(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("/night-entry/journal-history", {
+      const res = await axios.get("/api/night-entry/journal-history", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const notes = Array.isArray(res.data.data) ? res.data.data : [];
@@ -316,7 +316,7 @@ export default function NightPlanner() {
     if (!window.confirm("Delete this journal note?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/night-entry/journal/${noteId}`, {
+      await axios.delete(`/api/night-entry/journal/${noteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await fetchJournalHistory();

@@ -14,7 +14,7 @@ export default function AddReminderModal({ prefilledDate, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/reminders", { date, time, note });
+    await axios.post("/api/reminders", { date, time, note });
     onClose();
   };
 

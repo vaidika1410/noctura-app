@@ -20,7 +20,7 @@ const HabitTracker = () => {
   const fetchHabits = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/habits', { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.get('/api/habits', { headers: { Authorization: `Bearer ${token}` } });
       setHabits(
         (res.data.data || []).map(h => ({
           ...h,
@@ -80,8 +80,8 @@ const HabitTracker = () => {
       );
 
       const url = done
-        ? `/habits/${habitId}/uncomplete?date=${dayStr}`
-        : `/habits/${habitId}/complete?date=${dayStr}`;
+        ? `/api/habits/${habitId}/uncomplete?date=${dayStr}`
+        : `/api/habits/${habitId}/complete?date=${dayStr}`;
 
 
       await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
@@ -95,7 +95,7 @@ const HabitTracker = () => {
   const handleDelete = async (habit) => {
     if (!window.confirm('Delete this habit?')) return;
     try {
-      await axios.delete(`/habits/${habit._id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`/api/habits/${habit._id}`, { headers: { Authorization: `Bearer ${token}` } });
       fetchHabits();
     } catch (err) {
       console.error('Error deleting habit:', err);

@@ -33,12 +33,12 @@ const AddHabitModal = ({ habit, onClose, onHabitAdded }) => {
       const body = { title, description, sheetUrl, isShutdown };
 
       if (isEditMode) {
-        await axios.put(`/habits/${habit._id}`, body, {
+        await axios.put(`/api/habits/${habit._id}`, body, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
         await axios.post(
-          '/habits',
+          '/api/habits',
           { ...body, frequency: 'weekly' },
           { headers: { Authorization: `Bearer ${token}` } }
         );

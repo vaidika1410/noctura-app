@@ -50,7 +50,7 @@ export default function KanbanBoard() {
       });
 
       
-      await axios.delete(`/todo/${taskId}`);
+      await axios.delete(`/api/todo/${taskId}`);
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete task");
@@ -84,7 +84,7 @@ export default function KanbanBoard() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get("/todo");
+      const res = await axios.get("/api/todo");
       const data = res?.data?.data ?? res?.data ?? [];
       const groupedResp = { "To Do": [], "In Progress": [], Done: [] };
 
@@ -183,7 +183,7 @@ export default function KanbanBoard() {
 
      
       try {
-        await axios.put(`/todo/${activeIdLocal}`, {
+        await axios.put(`/api/todo/${activeIdLocal}`, {
           status: KANBAN_TO_TODO[destColumn],
         });
         await fetchTasks();
@@ -252,7 +252,7 @@ export default function KanbanBoard() {
   
     if (srcColumn !== destColumn) {
       try {
-        await axios.put(`/todo/${activeIdLocal}`, {
+        await axios.put(`/api/todo/${activeIdLocal}`, {
           status: KANBAN_TO_TODO[destColumn],
         });
         await fetchTasks();

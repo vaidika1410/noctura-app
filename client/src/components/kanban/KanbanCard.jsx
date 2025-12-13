@@ -23,7 +23,7 @@ export default function KanbanCard({ task, onEdit, onDelete }) {
   const handleDelete = async () => {
     if (!confirm("Delete this task?")) return;
     try {
-      await axios.delete(`/todo/${task._id}`);
+      await axios.delete(`/api/todo/${task._id}`);
       window.location.reload();
     } catch (err) {
       console.error("delete error", err);

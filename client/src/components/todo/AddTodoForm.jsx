@@ -63,7 +63,7 @@ export default function AddTodoForm({ prefilledDate, onClose, onTaskAdded, inlin
     }
 
     try {
-      await axios.post('/todo', payload, {
+      await axios.post('/api/todo', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

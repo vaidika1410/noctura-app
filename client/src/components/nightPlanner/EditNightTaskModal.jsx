@@ -24,7 +24,7 @@ export default function EditNightTaskModal({ task, onClose, onUpdated }) {
         try {
             setBusy(true);
             await axios.put(
-                `/night-tasks/${task._id}`,
+                `/api/night-tasks/${task._id}`,
                 { title, time, description },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

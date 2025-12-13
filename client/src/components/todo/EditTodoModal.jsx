@@ -27,7 +27,7 @@ const EditTodoModal = ({ task, onClose, onUpdated }) => {
 
     try {
       setLoading(true);
-      await axios.put(`/todo/${task._id}`, {
+      await axios.put(`/api/todo/${task._id}`, {
         title: title.trim(),
         description,
         status,

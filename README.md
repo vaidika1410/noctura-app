@@ -1,113 +1,160 @@
 # **Noctura**
 ### *Master Your Day, Embrace the Night*
 
-Noctura is a beautifully designed, dark-themed productivity web app that helps you stay organized with tasks, habits, and workflows. It blends simplicity with power—featuring to-do management, habit tracking, a Kanban board, reminders, and an optional night-time routine planner.
+Noctura is a modern, dark-themed productivity web application designed to help you plan, organize, and reflect — without overwhelming you.  
+It combines structured productivity for the day with optional mindful routines for the night, all wrapped in a calm, minimal interface.
+
+Built with scalability and real-world usage in mind, Noctura supports task management, habit tracking, Kanban workflows, reminders, and an optional night planner — all in one place.
 
 ---
 
 ## 🚀 Features
 
 ### ✅ **Smart To-Do System**
-- Add, edit, delete, and complete tasks  
-- Separate views for All / Pending / In-Progress / Completed  
-- Keyboard + mobile friendly  
+- Create, edit, delete, and complete tasks  
+- Status-based organization (Pending, In-Progress, Completed)  
+- Priority support (Low → Urgent)  
+- Clean and distraction-free task views  
 
-### 📊 **Powerful Habit Tracker**
-- Clean habit blocks with easy editing  
-- Progress visualization  
-- Mobile and desktop optimized layouts  
-
-### 🗂️ **Kanban Workflow Board**
-- Backlog → Pending → In-Progress → Completed  
-- Drag & drop for smooth workflow  
-- Customizable tags  
-
-### 🌙 **Optional Night Planner**
-- Reading  
-- Meditation  
-- Skincare  
-- Daily wind-down routines  
-- Appears only if enabled in settings  
-
-### 🗓️ **Day Planner + Calendar**
-- Calendar view with events and reminders  
-- Dashboard highlights your schedule at a glance  
-
-### 🎨 **Dark, Modern UI**
-- Minimal, aesthetic black/white design  
-- Responsive across all devices  
-- Smooth animations  
+![To-Do List](assets/screenshots/todo.png)
 
 ---
+
+### 📊 **Powerful Habit Tracker**
+- Daily habit creation and tracking  
+- Simple, visual progress representation  
+- Optimized layouts for both mobile and desktop  
+
+![Habit Tracker](assets/screenshots/habits.png)
+
+---
+
+### 🗂️ **Kanban Workflow Board**
+- Backlog → Pending → In-Progress → Done flow  
+- Drag & drop task movement  
+- Ideal for visual thinkers and project-style planning  
+
+![Kanban Board](assets/screenshots/kanban.png)
+
+---
+
+### 🌙 **Night Planner**
+
+- Reading routines  
+- Meditation & mindfulness  
+- Skincare / self-care habits  
+- Night reflections & wind-down tasks  
+
+Designed to appear **only when you want it**, keeping the app flexible.
+
+![Night Planner](assets/screenshots/night-planner.png)
+
+---
+
+### 🗓️ **Day Planner & Calendar**
+- Date-based task planning  
+- Calendar view with reminders  
+- Dashboard overview of daily workload  
+
+![Dashboard](assets/screenshots/dashboard.png)
+
+![Calendar View](assets/screenshots/calendar.png)
+
+---
+
+### 🎨 **Dark, Minimal UI**
+- Carefully crafted dark theme  
+- Smooth animations and subtle motion  
+- Responsive across all screen sizes  
+- Designed to reduce visual fatigue  
+
+---
+
+### 🔐 Authentication
+![Login Page](assets/screenshots/login.png)
 
 ## 🧱 Tech Stack
 
-**Frontend:** React.js  
-**Backend:** Node.js + Express.js  
-**Database:** MongoDB  
-**APIs:** REST API, Google Calendar API  
-**Hosting:** Render  
+**Frontend**
+- React (Vite)
+- Tailwind CSS
+- Axios
+- React Router
+
+**Backend**
+- Node.js
+- Express.js (v4)
+- JWT Authentication
+
+**Database**
+- MongoDB (Mongoose)
+
+**Deployment**
+- Render (Single Web Service)
+- Frontend + Backend bundled together
 
 ---
 
-## 📌 Project Structure (MERN)
-```
-/client   → React frontend  
-/server   → Node + Express backend  
-/models   → MongoDB models  
-/routes   → Express routes  
-/controllers → App logic  
-```
+## 🏗️ Project Architecture
+
+Noctura is deployed as a **single bundled MERN application**.
+
+/client → React frontend (Vite)
+/server → Node.js + Express backend
+/server/routes → API routes
+/server/models → MongoDB schemas
+/server/middleware → Auth & utilities
+
+
+In production, the React build (`client/dist`) is served directly by the Express server.
 
 ---
 
-## 🚦 Getting Started
+## 🌐 Environment Setup
 
-### Clone Repo
-```
-git clone https://github.com/yourusername/noctura.git
-cd noctura
-```
+### Local Development
 
-### Install Dependencies
-```
-cd client
-npm install
+## Frontend and backend run separately:
 
-cd ../server
-npm install
-```
+| Service | URL |
+|------|-----|
+| Frontend | http://localhost:5173 |
+| Backend  | http://localhost:5000 |
 
-### Start Dev Servers
-```
-cd client
-npm run dev
+### 🚀 Deployment Notes
 
-cd ../server
-npm start
-```
+- Frontend is built automatically during backend installation
 
----
+- Express serves the React app in production
 
-## 🧩 Roadmap
-- User analytics dashboard  
-- Streak system for habits  
-- PWA offline mode  
-- Task priority system  
-- Reminders with notifications  
+- All APIs are prefixed with /api
 
----
+- Axios switches automatically between dev & prod using environment variables
 
-## 👩‍💻 Made with love and productivity
+- Express v4 is used for stable wildcard routing
 
-Noctura is built to help you stay organized during the day and maintain calm, mindful routines at night — only if you want to.  
+### 🧩 Roadmap
 
----
+- Habit streaks & analytics
 
-### ✨ Author
+- User insights dashboard
 
-**Noctura** was created and designed by **Vaidika Kaul**.  
-All rights reserved. You are free to clone and learn from the project,
-but credit is required if you use or modify significant portions of the code.
+- Push & email notifications
 
-# **End of README.md**
+- PWA offline support
+
+- Enhanced calendar integrations
+
+### 👩‍💻 Author
+
+Noctura was designed and developed by **Vaidika Kaul**.
+
+You are free to clone and learn from this project.
+If you reuse or modify significant portions of the code, credit is appreciated.
+
+### ⭐ Final Note
+
+Noctura is not just a task manager —
+it’s a flexible system designed to adapt to how you want to work and unwind.
+
+### End of README.md

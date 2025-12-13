@@ -17,7 +17,7 @@ export default function CalendarWidget({ onDateSelect, onAddTask }) {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const res = await axios.get("/todo");
+      const res = await axios.get("/api/todo");
       const items = (res.data && (res.data.data || res.data)) || [];
       const map = {};
       items.forEach((t) => {

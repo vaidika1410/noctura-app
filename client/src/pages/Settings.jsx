@@ -75,7 +75,7 @@ export default function Settings() {
     }
 
     try {
-      const res = await axios.put("/auth/update-profile", {
+      const res = await axios.put("/api/auth/update-profile", {
         username: formData.username,
         email: formData.email,
       });

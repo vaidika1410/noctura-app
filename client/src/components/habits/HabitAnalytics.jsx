@@ -18,7 +18,7 @@ export default function HabitAnalytics() {
 
     const fetchHabits = async () => {
         try {
-            const res = await axios.get("/habits");
+            const res = await axios.get("/api/habits");
             setHabits(res.data.data || []);
         } catch (err) {
             console.error("Analytics fetch error", err);
