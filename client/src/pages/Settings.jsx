@@ -9,6 +9,8 @@ import {
   clearUser,
 } from "../utils/auth";
 import axios from "../api/axiosInstance";
+import toast from "react-hot-toast";
+
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -113,6 +115,8 @@ export default function Settings() {
   function handleLogout() {
     clearToken();
     clearUser();
+
+    toast.success("Logged out successfully 👋");
     navigate("/login", { replace: true }); 
   }
 
@@ -140,7 +144,7 @@ export default function Settings() {
       {/* DESKTOP SIDEBAR */}
       <aside className="relative hidden md:flex flex-col w-64 p-6 gap-6 glass h-screen  top-0">
         <div>
-          <a className="absolute top-8 left-5 h-20 w-30 " href="/">
+          <a className="absolute top-8 left-5 h-20 w-30 " href="/dashboard">
           <img className=" h-full w-full object-cover" src="Noctura-logo-full.png" alt="" />
           </a>
           <p className="absolute top-35 text-xs text-gray-400 mt-1">Settings</p>

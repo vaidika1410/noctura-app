@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "../api/axiosInstance";
 import { saveToken, saveUser } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 export default function Register() {
   const navigate = useNavigate();
@@ -11,6 +13,25 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const passwordStrength = getPasswordStrength(password);
+
+
+  function getPasswordStrength(password) {
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 1) return { label: "Weak", color: "bg-red-500", value: 25 };
+    if (score === 2 || score === 3)
+      return { label: "Medium", color: "bg-yellow-500", value: 60 };
+
+    return { label: "Strong", color: "bg-green-500", value: 100 };
+  }
+
 
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -50,15 +71,25 @@ export default function Register() {
       return setError("All fields are required");
     }
 
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return setError("Passwords do not match");
+    }
+
+
     try {
+      const toastId = toast.loading("Creating account...");
       setBusy(true);
 
-      // ✅ FIXED ENDPOINT
       const res = await axios.post("/api/auth/register", {
         username: name.trim(),
         email: email.trim(),
         password,
       });
+
+      toast.success("OTP sent to your email 📩");
+      navigate("/verify-otp", { state: { userId: res.data.userId } });
+
 
       const token = res?.data?.token;
       const user = res?.data?.user;
@@ -72,6 +103,12 @@ export default function Register() {
         err?.response?.data?.message ||
         err?.response?.data?.error ||
         err.message;
+        
+      if (err.response?.status === 403) {
+        navigate("/verify-otp", { state: { userId: err.response.data.userId } });
+      }
+
+      toast.error(msg);
       setError(msg);
     } finally {
       setBusy(false);
@@ -137,7 +174,7 @@ export default function Register() {
       <div
         className="
           w-full max-w-md p-8 sm:p-10
-          rounded-2xl reveal opacity-0 translate-y-6
+          rounded-2xl reveal opacity-0
           transition-all duration-700
         "
         style={{
@@ -152,8 +189,8 @@ export default function Register() {
           Create Account
         </h1>
 
-        <p className="text-gray-400 text-center mb-8 text-sm sm:text-base">
-          Join <span className="text-indigo-400 font-medium">Noctura</span>
+        <p className="text-gray-400 text-center mb-5 text-sm sm:text-base">
+          Join <a href="/"><span className="text-indigo-400 font-medium">Noctura</span></a>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -190,11 +227,43 @@ export default function Register() {
             />
           </div>
 
+          {/* Password Strength Indicator */}
+          {password && (
+            <div className="mt-2">
+              <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className={`h-full transition-all duration-300 ${passwordStrength.color}`}
+                  style={{ width: `${passwordStrength.value}%` }}
+                />
+              </div>
+              <p className="text-xs mt-1 text-gray-400">
+                Strength:{" "}
+                <span className="font-medium text-white">
+                  {passwordStrength.label}
+                </span>
+              </p>
+            </div>
+          )}
+
+
+          {/* Confirm Password */}
+          <div>
+            <label className="text-sm text-gray-300">Confirm Password</label>
+            <input
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              type="password"
+              className="mt-2 w-full p-3 bg-[#1d1b25] border border-white/10 rounded-xl text-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+              required
+            />
+          </div>
+
           {error && (
             <div className="text-sm text-red-400 bg-red-950/40 border border-red-900/40 p-2 rounded-lg text-center">
               {error}
             </div>
           )}
+
 
           <button
             type="submit"

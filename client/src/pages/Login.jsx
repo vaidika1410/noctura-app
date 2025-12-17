@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "../api/axiosInstance";
 import { saveToken, saveUser } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 export default function Login() {
 
@@ -34,7 +36,7 @@ export default function Login() {
   }, []);
 
   const particles = useMemo(() => {
-    const isMobile = window.innerWidth < 640; 
+    const isMobile = window.innerWidth < 640;
     const count = isMobile ? 25 : 40;
 
     return Array.from({ length: count }).map((_, i) => ({
@@ -57,11 +59,13 @@ export default function Login() {
     }
 
     try {
+      const toastId = toast.loading("Signing in...");
       setBusy(true);
 
-      // ✅ FIXED API ENDPOINT
+      // FIXED API ENDPOINT
       const res = await axios.post("/api/auth/login", { email, password });
 
+      toast.success("Welcome back 👋", { id: toastId });
       const token = res?.data?.token;
       const user = res?.data?.user;
 
@@ -75,13 +79,23 @@ export default function Login() {
 
       navigate("/dashboard");
     } catch (err) {
+      const res = err?.response?.data;
+
+      if (res?.needsVerification) {
+        toast.error("Please verify your email first");
+        navigate("/verify-otp", { state: { email: res.email } });
+        return;
+      }
+
       const msg =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
+        res?.error ||
         err?.message ||
         "Login failed";
+
+      toast.error(msg);
       setError(msg);
-    } finally {
+    }
+    finally {
       setBusy(false);
     }
   };
@@ -165,7 +179,7 @@ export default function Login() {
         </h1>
 
         <p className="text-gray-400 text-center mb-8 text-sm sm:text-base">
-          Sign in to <span className="text-indigo-400 font-medium">Noctura</span>
+          Sign in to <a href="/"><span className="text-indigo-400 font-medium">Noctura</span></a>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
