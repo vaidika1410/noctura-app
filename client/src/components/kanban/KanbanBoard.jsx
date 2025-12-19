@@ -58,6 +58,14 @@ export default function KanbanBoard() {
     }
   };
 
+  const handleAddTaskFromColumn = (columnTitle) => {
+    const status = KANBAN_TO_TODO[columnTitle] || "pending";
+    setAddTaskStatus(status);
+    setIsAddModalOpen(true);
+  };
+
+
+
 
 
   const [grouped, setGrouped] = useState({
@@ -73,6 +81,9 @@ export default function KanbanBoard() {
 
   const [activeId, setActiveId] = useState(null);
   const [editTask, setEditTask] = useState(null);
+
+  const [addTaskStatus, setAddTaskStatus] = useState(null);
+
 
 
   const sensors = useSensors(
@@ -237,6 +248,7 @@ export default function KanbanBoard() {
                   title={col}
                   tasks={grouped[col] || []}
                   onEdit={(task) => setEditTask(task)}
+                  onAddTask={handleAddTaskFromColumn}
                 />
 
 

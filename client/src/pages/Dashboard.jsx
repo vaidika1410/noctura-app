@@ -20,29 +20,38 @@ export default function Dashboard() {
   const savedUser = getUser();
   const location = useLocation();
 
+  const getSectionFromPath = (pathname) => {
+  if (pathname.includes("/kanban")) return "kanban";
+  if (pathname.includes("/habits")) return "habits";
+  if (pathname.includes("/nightPlanner")) return "nightPlanner";
+  if (pathname.includes("/calendar")) return "calendar";
+  return "todo";
+};
+
+
   useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // 1️⃣ Highest priority: URL path
+  const sectionFromPath = getSectionFromPath(location.pathname);
+  setActiveSection(sectionFromPath);
 
-    const params = new URLSearchParams(location.search);
-    const sectionFromUrl = params.get("section");
+  // 2️⃣ Optional: legacy ?section= support (keep if you want)
+  const params = new URLSearchParams(location.search);
+  const sectionFromQuery = params.get("section");
 
-    if (sectionFromUrl) {
-
-      const validSections = ["todo", "kanban", "habits", "nightPlanner", "calendar"];
-
-      if (validSections.includes(sectionFromUrl)) {
-        if (sectionFromUrl === "calendar") {
-          navigate("/calendar");
-        } else {
-          setActiveSection(sectionFromUrl);
-          setOpenAddTodoModal(false);
-        }
+  if (sectionFromQuery) {
+    const validSections = ["todo", "kanban", "habits", "nightPlanner", "calendar"];
+    if (validSections.includes(sectionFromQuery)) {
+      if (sectionFromQuery === "calendar") {
+        navigate("/calendar", { replace: true });
       } else {
-        console.warn("Unknown section param:", sectionFromUrl);
+        setActiveSection(sectionFromQuery);
       }
     }
-  }, [location]);
+  }
+}, [location.pathname, location.search]);
+
 
 
   return (

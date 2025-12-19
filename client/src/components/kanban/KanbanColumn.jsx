@@ -25,9 +25,7 @@ export default function KanbanColumn({ title, tasks = [], onDropCard, onAddTask,
           <span className="text-xs text-gray-500">{tasks.length}</span>
         </div>
 
-        <button onClick={onAddTask} className="w-full mb-4 px-3 py-2 rounded-lg text-sm font-medium border border-[#2f2f32] bg-[#1f1f21] hover:bg-[#2a2a2c] text-gray-300 transition">
-          + Add Task
-        </button>
+        
 
         <SortableContext items={tasks.map((t) => t._id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-3">
