@@ -40,7 +40,7 @@ export default function KanbanBoard() {
 
   const handleDeleteTask = async (taskId) => {
     try {
-     
+
       setGrouped((prev) => {
         const updated = {};
         for (const col of Object.keys(prev)) {
@@ -49,12 +49,12 @@ export default function KanbanBoard() {
         return updated;
       });
 
-      
+
       await axios.delete(`/api/todo/${taskId}`);
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete task");
-      fetchTasks(); 
+      fetchTasks();
     }
   };
 
@@ -68,9 +68,9 @@ export default function KanbanBoard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  
 
- 
+
+
   const [activeId, setActiveId] = useState(null);
   const [editTask, setEditTask] = useState(null);
 
@@ -108,7 +108,7 @@ export default function KanbanBoard() {
     fetchTasks();
   }, []);
 
-  
+
   const findColumnOfTask = (id) => {
     for (const col of COLUMNS) {
       if ((grouped[col] || []).some((t) => t._id === id)) return col;
@@ -121,7 +121,7 @@ export default function KanbanBoard() {
     setActiveId(event.active.id);
   };
 
-  
+
   const handleDragOver = (event) => {
     const { active, over } = event;
     if (!over) return;
@@ -129,13 +129,13 @@ export default function KanbanBoard() {
     const activeIdLocal = active.id;
     const overId = over.id;
 
-    
+
     if (String(overId).startsWith("col-")) {
       const destColumn = String(overId).slice(4);
       const srcColumn = findColumnOfTask(activeIdLocal);
       if (!srcColumn || srcColumn === destColumn) return;
 
-      
+
       setGrouped((prev) => {
         const prevSrc = [...(prev[srcColumn] || [])];
         const prevDst = [...(prev[destColumn] || [])];
@@ -147,125 +147,58 @@ export default function KanbanBoard() {
       });
     }
 
-    
+
   };
 
   const handleDragEnd = async (event) => {
     const { active, over } = event;
     setActiveId(null);
 
-    if (!over) {
-      
-      await fetchTasks();
-      return;
-    }
+    if (!over) return;
 
     const activeIdLocal = active.id;
     const overId = over.id;
 
-    
-    if (String(overId).startsWith("col-")) {
-      const destColumn = String(overId).slice(4);
-      const srcColumn = findColumnOfTask(activeIdLocal);
-      if (!srcColumn) return;
-
-      
-      setGrouped((prev) => {
-        const src = [...(prev[srcColumn] || [])];
-        const dst = [...(prev[destColumn] || [])];
-        const idx = src.findIndex((t) => t._id === activeIdLocal);
-        if (idx === -1) return prev;
-        const [moved] = src.splice(idx, 1);
-        moved.status = KANBAN_TO_TODO[destColumn];
-        dst.unshift(moved);
-        return { ...prev, [srcColumn]: src, [destColumn]: dst };
-      });
-
-     
-      try {
-        await axios.put(`/api/todo/${activeIdLocal}`, {
-          status: KANBAN_TO_TODO[destColumn],
-        });
-        await fetchTasks();
-      } catch (err) {
-        console.error("Failed to update status:", err);
-        await fetchTasks();
-      }
-
-      return;
-    }
-
-
-    const destCardId = overId;
     const srcColumn = findColumnOfTask(activeIdLocal);
-    const destColumn = findColumnOfTask(destCardId);
-    if (!srcColumn || !destColumn) {
-      await fetchTasks();
-      return;
+    let destColumn = null;
+
+    if (String(overId).startsWith("col-")) {
+      destColumn = String(overId).slice(4);
+    } else {
+      destColumn = findColumnOfTask(overId);
     }
 
- 
+    if (!srcColumn || !destColumn || srcColumn === destColumn) return;
+
+    // optimistic UI (IMMUTABLE)
     setGrouped((prev) => {
-      const src = [...(prev[srcColumn] || [])];
-   
-      const activeIndex = src.findIndex((t) => t._id === activeIdLocal);
-      let moved;
-      if (activeIndex !== -1) {
-        [moved] = src.splice(activeIndex, 1);
-      } else {
-       
-        moved = null;
-      }
+      const srcTasks = prev[srcColumn].filter(t => t._id !== activeIdLocal);
+      const movedTask = prev[srcColumn].find(t => t._id === activeIdLocal);
+      if (!movedTask) return prev;
 
-   
-      if (srcColumn === destColumn) {
-        const list = [...src];
-      
-        const destIndex = list.findIndex((t) => t._id === destCardId);
-        if (moved) {
-      
-          const newList = Array.from(list);
-          const insertIndex = destIndex === -1 ? newList.length : destIndex;
-          newList.splice(insertIndex, 0, moved);
-          return { ...prev, [srcColumn]: newList };
-        }
-      } else {
-        
-        const srcOther = [...(prev[srcColumn] || [])];
-        const dst = [...(prev[destColumn] || [])];
-       
-        const actIdx = srcOther.findIndex((t) => t._id === activeIdLocal);
-        if (actIdx !== -1) [moved] = srcOther.splice(actIdx, 1);
-        
-        const destIndex = dst.findIndex((t) => t._id === destCardId);
-        const insertIndex = destIndex === -1 ? dst.length : destIndex;
-        if (moved) {
-          moved.status = KANBAN_TO_TODO[destColumn];
-          dst.splice(insertIndex, 0, moved);
-        }
-        return { ...prev, [srcColumn]: srcOther, [destColumn]: dst };
-      }
+      const updatedTask = {
+        ...movedTask,
+        status: KANBAN_TO_TODO[destColumn]
+      };
 
-      return prev;
+      return {
+        ...prev,
+        [srcColumn]: srcTasks,
+        [destColumn]: [updatedTask, ...prev[destColumn]]
+      };
     });
 
-  
-    if (srcColumn !== destColumn) {
-      try {
-        await axios.put(`/api/todo/${activeIdLocal}`, {
-          status: KANBAN_TO_TODO[destColumn],
-        });
-        await fetchTasks();
-      } catch (err) {
-        console.error("Failed to update status:", err);
-        await fetchTasks();
-      }
-    } else {
-     
-    
-      await fetchTasks();
+    try {
+      await axios.put(`/api/todo/${activeIdLocal}`, {
+        status: KANBAN_TO_TODO[destColumn],
+      });
+      await fetchTasks(); // sync with backend
+    } catch (err) {
+      console.error("Failed to update status:", err);
+      await fetchTasks(); // rollback
     }
   };
+
 
   return (
     <div className="p-4 md:p-6 min-h-screen" style={{ background: "#151517", color: "#E5E7EB" }}>
@@ -292,9 +225,9 @@ export default function KanbanBoard() {
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
+
           {/* Top-level SortableContext for columns (helps mobile leave/enter detection) */}
           <SortableContext items={COLUMNS.map((c) => `col-${c}`)}>
             <div className="w-full flex flex-col md:flex-row gap-4 md:gap-6 pb-6">
