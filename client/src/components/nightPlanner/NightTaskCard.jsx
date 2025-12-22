@@ -41,7 +41,7 @@ export default function NightTaskCard({ task, onEdit, onDelete }) {
       )}
 
       {/* ACTION BUTTONS */}
-      <div className="flex justify-end gap-4 mt-4">
+      <div className="flex justify-end gap-2 mt-6 border-t pt-4 border-[#ffffff13]">
         <button
           onClick={(e) => {
             e.stopPropagation();

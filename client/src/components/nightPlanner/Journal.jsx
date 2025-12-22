@@ -115,7 +115,7 @@ export default function Journal() {
             </div>
 
             <div className="max-w-6xl mx-auto">
-                {/* ----------------------- DESKTOP NOTEBOOK LAYOUT ----------------------- */}
+                {/* DESKTOP NOTEBOOK LAYOUT */}
                 <div
                     className="hidden md:flex justify-center gap-6 p-8 rounded-xl shadow-lg"
                     style={{
@@ -217,7 +217,7 @@ export default function Journal() {
 
                     {/* RIGHT PAGE — DOT GRID + PREVIEW */}
                     <div
-                        className="flex-1 p-6 rounded-xl"
+                        className="flex-1 p-6 rounded-xl relative"
                         style={{ background: "#0b0c0d", minHeight: "70vh" }}
                     >
                         <h2 className="text-xl font-semibold mb-4">
@@ -239,7 +239,7 @@ export default function Journal() {
                                             "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 1px)",
                                         backgroundSize: "18px 18px",
                                         lineHeight: "1.7",
-                                        minHeight: "300px",
+                                        minHeight: "350px",
                                         border: "1px solid #1e1e1f",
                                     }}
                                 />
@@ -247,7 +247,7 @@ export default function Journal() {
                                 <button
                                     onClick={handleSave}
                                     disabled={saving}
-                                    className="mt-4 px-5 py-2 rounded-md text-sm font-semibold"
+                                    className="mt-4 px-5 py-2 rounded-md text-sm font-semibold absolute bottom-6 left-6"
                                     style={{ background: "#4A6CF7", color: "white" }}
                                 >
                                     {saving ? "Saving..." : "Save Entry"}
@@ -263,7 +263,7 @@ export default function Journal() {
                                 )}
 
                                 <button
-                                    className="mt-4 px-4 py-2 rounded bg-[#4A6CF7]"
+                                    className="mt-4 px-4 py-2 rounded bg-[#4A6CF7] absolute bottom-6 left-6"
                                     onClick={() => setSelectedNote(null)}
                                 >
                                     Close Preview
