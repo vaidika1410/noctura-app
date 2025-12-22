@@ -73,7 +73,6 @@ app.use('/api/kanban', authMiddleware, kanbanRoutes);
 app.use("/api/reminders", authMiddleware, require("./routes/reminderRoutes"));
 app.use("/api/night-entry", authMiddleware, nightEntryRoutes);
 
-
 app.get('/health', (req, res) => res.json({ status: "ok" }));
 
 if (process.env.NODE_ENV === "production") {

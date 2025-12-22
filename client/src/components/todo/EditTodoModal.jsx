@@ -93,7 +93,6 @@ const EditTodoModal = ({ task, onClose, onUpdated }) => {
           />
 
           {/* STATUS SELECTOR */}
-          {/* STATUS SELECTOR */}
           <div className="relative">
             <select
               value={status}
@@ -142,7 +141,7 @@ const EditTodoModal = ({ task, onClose, onUpdated }) => {
               <option value="low">🟢 Low</option>
               <option value="medium">🟡 Medium</option>
               <option value="high">🟠 High</option>
-              <option value="urgent">🔴 Urgent</option>
+              {/* <option value="urgent">🔴 Urgent</option> */}
             </select>
 
             <div

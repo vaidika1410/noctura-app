@@ -33,6 +33,16 @@ const taskSchema = new Schema(
       default: 'medium',
     },
 
+    comments: {
+      type: [
+        {
+          text: { type: String, required: true },
+          createdAt: { type: Date, default: Date.now },
+        },
+      ],
+      default: [],
+    },
+
   },
   {
     timestamps: true,

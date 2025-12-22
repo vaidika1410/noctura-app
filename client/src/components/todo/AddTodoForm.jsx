@@ -160,8 +160,7 @@ export default function AddTodoForm({ prefilledDate, onClose, onTaskAdded, inlin
               >
                 <option value="low">🟢 Low</option>
                 <option value="medium">🟡 Medium</option>
-                <option value="high">🟠 High</option>
-                <option value="urgent">🔴 Urgent</option>
+                <option value="high">🔴 High</option>
               </select>
 
               {/* Custom arrow */}

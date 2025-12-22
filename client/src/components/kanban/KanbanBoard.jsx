@@ -64,10 +64,6 @@ export default function KanbanBoard() {
     setIsAddModalOpen(true);
   };
 
-
-
-
-
   const [grouped, setGrouped] = useState({
     "To Do": [],
     "In Progress": [],
@@ -83,6 +79,22 @@ export default function KanbanBoard() {
   const [editTask, setEditTask] = useState(null);
 
   const [addTaskStatus, setAddTaskStatus] = useState(null);
+
+
+
+  const updateTaskComments = (taskId, updatedComments) => {
+    setGrouped((prev) => {
+      const next = {};
+      for (const col of Object.keys(prev)) {
+        next[col] = prev[col].map((t) =>
+          t._id === taskId
+            ? { ...t, comments: updatedComments }
+            : t
+        );
+      }
+      return next;
+    });
+  };
 
 
 
@@ -102,7 +114,11 @@ export default function KanbanBoard() {
       if (Array.isArray(data)) {
         data.forEach((t) => {
           const col = TODO_TO_KANBAN[t.status] || "To Do";
-          groupedResp[col].push(t);
+          groupedResp[col].push({
+            ...t,
+            comments: Array.isArray(t.comments) ? t.comments : [],
+          });
+
         });
       }
 
@@ -249,6 +265,7 @@ export default function KanbanBoard() {
                   tasks={grouped[col] || []}
                   onEdit={(task) => setEditTask(task)}
                   onAddTask={handleAddTaskFromColumn}
+                  onCommentsUpdate={updateTaskComments} 
                 />
 
 
