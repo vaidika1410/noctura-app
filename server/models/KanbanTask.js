@@ -34,17 +34,6 @@ const kanbanTaskSchema = new Schema(
       ref: 'User',
       required: [true, 'userId is required'],
     },
-
-    comments: {
-      type: [
-        {
-          text: { type: String, required: true },
-          createdAt: { type: Date, default: Date.now },
-        },
-      ],
-      default: [], // default count = 0
-    },
-
   },
   {
     timestamps: true,

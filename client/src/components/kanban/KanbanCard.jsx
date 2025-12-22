@@ -3,13 +3,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axiosInstance";
-import TaskDrawer from "./TaskDrawer";
 
-export default function KanbanCard({ task, onEdit, onDelete, onCommentsUpdate, }) {
+export default function KanbanCard({ task, onEdit, onDelete }) {
   const navigate = useNavigate();
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: task._id });
@@ -80,26 +76,7 @@ export default function KanbanCard({ task, onEdit, onDelete, onCommentsUpdate, }
         <p className="text-gray-400 text-sm mb-3">{task.description}</p>
       )}
 
-      <div className="flex items-center justify-between text-gray-500 text-xs mt-2 pb-1">
-        <div className="flex items-center gap-4">
-          <span
-            className="opacity-80 cursor-pointer hover:text-white"
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpenDrawer(true);
-            }}
-          >
-            💬 {Array.isArray(task.comments) ? task.comments.length : 0} Comments
-          </span>
-
-          {task.dueDate && (
-            <span>{new Date(task.dueDate).toLocaleDateString()}</span>
-          )}
-        </div>
-      </div>
-
-      <div className="flex justify-end gap-3 mt-4 pt-2 border-t border-gray-800">
+      <div className="flex justify-end gap-3 mt-8 pt-2 border-t border-gray-800">
         <button
           onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
@@ -122,16 +99,6 @@ export default function KanbanCard({ task, onEdit, onDelete, onCommentsUpdate, }
           Delete
         </button>
       </div>
-
-      {openDrawer && (
-        <TaskDrawer
-          task={task}
-          onClose={() => setOpenDrawer(false)}
-          onCommentsUpdate={onCommentsUpdate}
-        />
-      )}
-
-
 
     </div>
   );
